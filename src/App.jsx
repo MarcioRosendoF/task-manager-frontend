@@ -70,6 +70,29 @@ function App() {
     }
   }
 
+  async function handleUpdate(task, newTitle) {
+    try {
+      const response = await fetch(`/tasks/${task.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: newTitle, completed: task.completed })
+      })
+
+      if (!response.ok) {
+        throw new Error(`Erro ${response.status}`)
+      }
+
+      const updated = await response.json()
+      setTasks((previousTasks) =>
+        previousTasks.map((item) => (item.id === updated.id ? updated : item))
+      )
+      return true
+    } catch {
+      window.alert('Não foi possível salvar a alteração')
+      return false
+    }
+  }
+
   return (
     <div className="max-w-xl mx-auto mt-10 px-4">
       <h1 className="text-2xl font-bold text-gray-900">Task Manager</h1>
@@ -77,7 +100,12 @@ function App() {
       {loading && <p className="mt-6 text-gray-600">Carregando tarefas...</p>}
       {error && <p className="mt-6 text-red-600">{error}</p>}
       {!loading && !error && (
-        <TaskList tasks={tasks} onToggle={handleToggle} onDelete={handleDelete} />
+        <TaskList
+          tasks={tasks}
+          onToggle={handleToggle}
+          onDelete={handleDelete}
+          onUpdate={handleUpdate}
+        />
       )}
     </div>
   )
