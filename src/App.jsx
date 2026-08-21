@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import TaskForm from './components/TaskForm'
 import TaskList from './components/TaskList'
 
 function App() {
@@ -25,9 +26,14 @@ function App() {
     loadTasks()
   }, [])
 
+  function handleTaskCreated(task) {
+    setTasks((previousTasks) => [...previousTasks, task])
+  }
+
   return (
     <div className="max-w-xl mx-auto mt-10 px-4">
       <h1 className="text-2xl font-bold text-gray-900">Task Manager</h1>
+      <TaskForm onTaskCreated={handleTaskCreated} />
       {loading && <p className="mt-6 text-gray-600">Carregando tarefas...</p>}
       {error && <p className="mt-6 text-red-600">{error}</p>}
       {!loading && !error && <TaskList tasks={tasks} />}
