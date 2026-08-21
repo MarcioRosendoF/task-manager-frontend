@@ -6,6 +6,8 @@
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES2023-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
+![Task Manager app](docs/screenshot.png)
+
 [Português](#portugues) | [English](#english)
 
 ---
