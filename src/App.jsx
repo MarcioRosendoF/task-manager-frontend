@@ -95,6 +95,8 @@ function App() {
     }
   }
 
+  const completedCount = tasks.filter((task) => task.completed).length
+
   const filteredTasks = tasks.filter((task) => {
     if (filter === 'active') return !task.completed
     if (filter === 'completed') return task.completed
@@ -104,6 +106,9 @@ function App() {
   return (
     <div className="max-w-xl mx-auto mt-10 px-4">
       <h1 className="text-2xl font-bold text-gray-900">Task Manager</h1>
+      <p className="mt-1 text-sm text-gray-500">
+        {completedCount} de {tasks.length} concluídas
+      </p>
       <TaskForm onTaskCreated={handleTaskCreated} />
       <FilterTabs filter={filter} onChange={setFilter} />
       {loading && <p className="mt-6 text-gray-600">Carregando tarefas...</p>}
