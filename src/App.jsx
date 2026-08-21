@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
+import FilterTabs from './components/FilterTabs'
 import TaskForm from './components/TaskForm'
 import TaskList from './components/TaskList'
 
 function App() {
   const [tasks, setTasks] = useState([])
+  const [filter, setFilter] = useState('all')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -93,15 +95,22 @@ function App() {
     }
   }
 
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === 'active') return !task.completed
+    if (filter === 'completed') return task.completed
+    return true
+  })
+
   return (
     <div className="max-w-xl mx-auto mt-10 px-4">
       <h1 className="text-2xl font-bold text-gray-900">Task Manager</h1>
       <TaskForm onTaskCreated={handleTaskCreated} />
+      <FilterTabs filter={filter} onChange={setFilter} />
       {loading && <p className="mt-6 text-gray-600">Carregando tarefas...</p>}
       {error && <p className="mt-6 text-red-600">{error}</p>}
       {!loading && !error && (
         <TaskList
-          tasks={tasks}
+          tasks={filteredTasks}
           onToggle={handleToggle}
           onDelete={handleDelete}
           onUpdate={handleUpdate}
